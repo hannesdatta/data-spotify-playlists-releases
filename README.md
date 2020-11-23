@@ -49,7 +49,7 @@ While the data is collected from everynoise.com/worldbrowser.cgi, the data *actu
 ├── release                 <- folder with public releases
 ├── src                     <- source code 
 │   └── collect                (data collection) 
-│   └── prepare                (parsing and preparation for public release)
+└────── prepare                (parsing and preparation for public release)
 ```
 
 ### Workflow
