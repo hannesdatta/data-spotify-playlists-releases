@@ -112,3 +112,9 @@ venv.bak/
 # temp directories
 html_dumbs/
 *JSON
+
+**.DS_Store
+**/release
+DVUploader.jar
+credentials.txt
+**/rawdata-confidential

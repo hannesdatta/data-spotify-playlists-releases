@@ -1,8 +1,21 @@
-# Scraper for everynoise.com
+# Documentation of "Playlist promotions and New Releases at Spotify (2019 - today)"
 
-## Overview
+This is a repository which hosts the source code to scrape and prepare the public version of the data set:
 
-This repository contains two webscrapers to collect data from everynoise.com. 
+Datta, Hannes, 2020, "Playlist promotions and New Releases at Spotify", https://doi.org/10.34894/0RK0KK, DataverseNL.
+
+If you are...
+- a (potential) user of the data, you can [download the data](https://doi.org/10.34894/0RK0KK), or view its detailed [documentation here](doc/). 
+- part of the maintenance team, you can use this repository to update the dataset or its documentation.
+- interested in creating your own reproducible workflows for anonymizing and sharing data with the public, you can use this repository as a template.
+
+<!-- remove if necessary-->
+__Note:__ The data set is not released to the public yet (expected mid of 2021). For questions, get in touch via email, please.
+<!-- -->
+
+## Overview about the data
+
+This repository contains data collected with two webscrapers from everynoise.com. 
 
 (1) **New releases**: A list of (weekly) album and single releases to Spotify, by country
 ![Screenshot](/doc/everynoise_newrelease_by_genre.png)
@@ -17,7 +30,44 @@ While the data is collected from everynoise.com/worldbrowser.cgi, the data *actu
 
 ![Screenshot of the playlist browse feature on Spotify](/doc/spotify_browse.png)
 
-## Collecting the raw data
+## Workflow for maintaining the data and its documentation
+
+### Setup
+
+- Obtain a valid API key from Dataverse ("API Token" in the main menu), and store it as a user's environment variable called DATAVERSE_TOKEN.
+- Install Java
+- Download the most recent version of the [Dataverse uploading tool](https://github.com/GlobalDataverseCommunityConsortium/dataverse-uploader/) (run `bash init.sh` on Mac, or paste the link contained in the file in your browser on Windows)
+
+
+### File and directory structure
+
+```
+├── credentials.txt         <- stores API credentials
+├── doc                     <- put any documentation here
+│   └── readme-template.txt (start from this template)
+├── rawdata-confidential    <- folder with confidential data
+├── release                 <- folder with public releases
+├── src                     <- source code 
+│   └── collect                (data collection) 
+│   └──                        (parsing and preparation for public release)
+```
+
+### Workflow
+
+* __Archive confidential raw data on Dataverse__: `push_raw.sh` pushes the raw data to Dataverse (done once, `bash push_raw.sh`; or paste code into your command prompt on Windows). Remember to __restrict access to the folder__, by editing the file/directory permissions directly on Dataverse.
+
+* __Add/change data preparation code__ (e.g., to anonymize data) in `src\`; run this code yourself to produce derivate datasets for the (to-be-made public) `release\` folder.
+
+* __Release public versions__ of the data to Dataverse: `release.sh` pushes (updates) to the documentation in `doc\`, or the prepared data set in `release\`.
+
+* Done? Publish your data set on Dataverse (via the web interface).
+
+Note: API keys used in the `.sh` scripts is deprecated.
+
+
+## Workflow for collecting the raw data 
+
+### Setup
 
 First, please install...
 - Python distribution via Anaconda
@@ -31,7 +81,7 @@ Then, you can run the data collections:
 - Run everynoise_worldbrowser.py file (hourly)
 `python everynoise_worldbrowser.py`
 
-## Documentation of output
+### Documentation of output
 
 The two webscrapers write the output of the data collections to JSON files.
 
