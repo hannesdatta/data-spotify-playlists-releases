@@ -6,7 +6,6 @@ csvfn='../../release/everynoise-new-releases.csv' # output file
 
 import glob
 
-
      
 
 fn='../externals/newreleases\everynoise_newreleases_20200413.json'
