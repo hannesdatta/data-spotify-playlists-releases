@@ -2,10 +2,16 @@ import json
 
 # Open file
 dirn = '../../rawdata-confidential/promotions/*.json' # input files
-csvfn='../../release/everynoise-playlist-promotions.csv' # output file
+csvfn='../../temp/everynoise-playlist-promotions.csv' # output file
 
 
 import glob
+
+import os
+try:
+	os.mkdir('../../temp')
+except:
+	print('directory exists')
 
 
 fn='../externals/worldbrowser\everynoise_worldbrowser_20200129_1510.json'

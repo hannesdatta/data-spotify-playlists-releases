@@ -3,7 +3,7 @@ library(stringi)
 
 nrows = -1L
 
-raw <- fread('../../release/everynoise-new-releases.csv', nrows=nrows, quote = "", encoding = 'UTF-8', na.strings=c('NA','None'))
+raw <- fread('../../temp/everynoise-new-releases.csv', nrows=nrows, quote = "", encoding = 'UTF-8', na.strings=c('NA','None'))
 
 raw[, rank_cleaned:=as.numeric(gsub('^.*[:] ','', gsub(',', '', rank)))]
 
@@ -24,6 +24,7 @@ setnames(raw, tolower(colnames(raw)))
 
 setcolorder(raw, c('date','countrycode','rank','trackid','artistid','albumid','artistname','albumname'))
 
-fwrite(raw, '../../release/everynoise-new-releases-full.csv')
+dir.create('../../release')
+fwrite(raw, '../../release/everynoise-new-releases.csv')
 fwrite(raw[, grep('name',colnames(raw), invert=T, value=T),with=F], '../../release/everynoise-new-releases-no-titles.csv')
 

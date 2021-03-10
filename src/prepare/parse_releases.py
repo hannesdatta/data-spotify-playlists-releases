@@ -2,9 +2,14 @@ import json
 
 # Open file
 dirn = '../../rawdata-confidential/new-releases/*.json' # input files
-csvfn='../../release/everynoise-new-releases.csv' # output file
+csvfn='../../temp/everynoise-new-releases.csv' # output file
 
 import glob
+import os
+try:
+	os.mkdir('../../temp')
+except:
+	print('directory exists')
 
      
 

@@ -1,13 +1,9 @@
 library(data.table)
 library(stringi)
 
-raw <- fread('../../release/everynoise-playlist-promotions.csv', nrows=-1L)
+nrows=-1L
+raw <- fread('../../temp/everynoise-playlist-promotions.csv', nrows=nrows)
 
-
-# ever promoted?! / promotion intensity
-#levs = levels(raw$countryCode)
-#levs[which(!nchar(levs)==2)] <- 'GLOB'
-#setattr(raw$countryCode,"levels",levs)
 
 raw[!nchar(countryCode)==2, countryCode:='GLOB']
 
@@ -21,33 +17,37 @@ agg[, countryCode:=tolower(stri_trim(countryCode))]
 # country codes
 # from: https://github.com/datasets/country-codes/blob/master/data/country-codes.csv
 
-countries <- fread('country_codes.csv', encoding = 'Latin-1', na.strings='')
-countries[, countryCode:=tolower(stri_trim(Two_Letter_Country_Code))]
-countries[, Continent_Name:=tolower(gsub(' ', '', Continent_Name))]
+countries <- fread('country-codes.csv', encoding = 'UTF-8', na.strings='')
+
+countries[, countryCode:=tolower(stri_trim(`ISO3166-1-Alpha-2`))]
+
+countries[, Continent_Name:=tolower(gsub(' ', '', Continent))]
 
 
 setkey(countries, countryCode)
 setkey(agg, countryCode)
 agg[countries, continent:=i.Continent_Name]
-agg[countryCode=='glob', continent:='GLOB']
-
-stopifnot(nrow(agg[is.na(continent)])==0)
-
-tmp = dcast(agg, scrapeDate+sectionName+playlist_id~continent, value.var='V1', fill = 0, fun.aggregate=sum)
+agg[countryCode=='glob', continent:='glob']
 
 
 dates <- data.table(scrapeDate=unique(agg$scrapeDate))
 dates[, date:=as.Date(as.character(scrapeDate), format = '%Y%m%d')]
 
 setkey(dates, scrapeDate)
-setkey(tmp, scrapeDate)
+setkey(agg, scrapeDate)
 
-tmp[dates, date:=i.date]
-tmp[, scrapeDate:=NULL]
+agg[dates, date:=i.date]
+agg[, scrapeDate:=NULL]
 
-setnames(tmp, 'sectionName', 'sectionname')
 
-setcolorder(tmp, c('date','sectionname', 'playlist_id','GLOB'))
+# only list whether it was listed, not how much?!
+setcolorder(agg, c('countryCode','continent','sectionName', 'date','playlist_id'))
 
-dir.create('../output/')
-fwrite(tmp, '../output/promotions.csv')
+agg[, V1:=NULL]
+
+
+stopifnot(nrow(agg[is.na(continent)])==0)
+
+dir.create('../../release/')
+fwrite(tmp, '../../release/promotions.csv')
+
