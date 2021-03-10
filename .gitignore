@@ -112,6 +112,7 @@ venv.bak/
 # temp directories
 html_dumbs/
 *JSON
+temp/
 
 **.DS_Store
 **/release

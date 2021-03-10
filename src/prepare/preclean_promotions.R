@@ -49,5 +49,5 @@ agg[, V1:=NULL]
 stopifnot(nrow(agg[is.na(continent)])==0)
 
 dir.create('../../release/')
-fwrite(tmp, '../../release/promotions.csv')
+fwrite(agg, '../../release/promotions.csv')
 
