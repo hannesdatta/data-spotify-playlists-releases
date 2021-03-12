@@ -1,0 +1,1 @@
+aws s3 sync release/. s3://uvt-spotify-covid19/raw/everynoise/2021_03_10 --region eu-central-1 
