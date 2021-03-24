@@ -43,17 +43,17 @@ def moveFile(filepath, filename):
 class EveryNoiseWorldBrowserSpider(scrapy.Spider):
     name = "worldbrowser"
     start_urls = ['http://everynoise.com/worldbrowser.cgi?section=']
-    
+
     rate = .25
-    
+
     def __init__(self):
         self.download_delay = 1/float(self.rate)
-    
+
     def parse(self, response):
         for section in response.xpath('//select[@name="section"]/option'):
             # reconstruct the url using the section name and hour - if available - from drop-down
             section_name=section.css('option::attr(value)').get()
-            
+
             if (section_name=='featured'):
                 for hour in response.xpath('//select[@name="hours"]/option'):
                     final_url = self.start_urls[0] + section.css('option::attr(value)').get() + "&hours=" + hour.css('option::attr(value)').get()
@@ -79,11 +79,11 @@ class EveryNoiseWorldBrowserSpider(scrapy.Spider):
             everyNoiseHourReference = parse_qs(parsed_url.query)['hours'][0]
         except:
             everyNoiseHourReference = 'NA'
-       
+
         with open(htmlDirectory +'/worldbrowser_page_' + runTS + '_' + sectionName + '_'+ str(everyNoiseHour).replace(':','')+'.html', 'wb') as html_file:
             html_file.write(response.body)
             files_to_handle.append(os.path.basename(html_file.name))  # add html_file filename to files_to_handle list
-        
+
         for playlists in response.css('div.playlists'):
             yield {
                 'sectionName': sectionName,
@@ -113,6 +113,7 @@ class EveryNoiseWorldBrowserPipeline(object):
 # settings
 process = CrawlerProcess(settings={
     'ITEM_PIPELINES': {'everynoise_worldbrowser.EveryNoiseWorldBrowserPipeline': 300},
+    'USER_AGENT': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/22.0.1207.1 Safari/537.1',
     # 'LOG_LEVEL' : 'INFO',
 })
 
