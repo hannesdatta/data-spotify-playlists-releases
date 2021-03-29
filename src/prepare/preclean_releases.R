@@ -8,8 +8,8 @@ raw <- fread('../../temp/everynoise-new-releases.csv', nrows=nrows, quote = "", 
 raw[, rank_cleaned:=as.numeric(gsub('^.*[:] ','', gsub(',', '', rank)))]
 
 raw[, trackId:=gsub('spotify:track:','', trackId)]
-raw[, artistId:=gsub('spotify:artist:','', trackId)]
-raw[, albumId:=gsub('spotify:albumId:','', trackId)]
+raw[, artistId:=gsub('spotify:artist:','', artistId)]
+raw[, albumId:=gsub('spotify:albumId:','', albumId)]
 
 raw[, rank:=NULL]
 setnames(raw, 'rank_cleaned','rank')
