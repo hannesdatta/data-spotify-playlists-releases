@@ -13,7 +13,7 @@ import logging
 logging.basicConfig(level=logging.INFO, filename="everynoise_newreleases_logs.log", filemode="a", format="%(asctime)s - %(levelname)s - %(name)s - %(message)s")
 
 bucket_name = "uvt-data-music-streaming"
-bucket_dir = 'everynoise/new-releases/'
+bucket_dir = 'everynoise/raw/new-releases/'
 
 # function to backup on S3
 def uploadToS3(filepath, filename):

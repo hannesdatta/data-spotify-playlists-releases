@@ -13,7 +13,7 @@ import logging
 logging.basicConfig(level=logging.INFO, filename="spotifycharts.log", filemode="a", format="%(asctime)s - %(levelname)s - %(name)s - %(message)s")
 
 bucket_name = "uvt-streaming-data"
-bucket_dir = 'spotifycharts/'
+bucket_dir = 'spotifycharts/raw/'
 
 
 # function to backup on S3
