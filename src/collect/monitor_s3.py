@@ -1,6 +1,6 @@
 import boto3
 
-bucket_name = "uvt-streaming-data"
+bucket_name = "uvt-data-music-streaming"
 bucket_dir = 'everynoise/'
 
 s3 = boto3.resource('s3')

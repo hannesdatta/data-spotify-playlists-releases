@@ -12,7 +12,7 @@ import logging
 # enable logging
 logging.basicConfig(level=logging.INFO, filename="everynoise_worldbrowser_logs.log", filemode="a", format="%(asctime)s - %(levelname)s - %(name)s - %(message)s")
 
-bucket_name = "uvt-streaming-data"
+bucket_name = "uvt-data-music-streaming"
 bucket_dir = 'everynoise/worldbrowser/'
 
 
