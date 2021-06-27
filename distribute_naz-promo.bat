@@ -1,0 +1,1 @@
+aws s3 cp release/promotions.csv s3://uvt-streaming-phd/raw/playlist_promotion_by_country/2021_03_31/promotions.csv --region eu-central-1
