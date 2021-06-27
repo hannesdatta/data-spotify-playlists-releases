@@ -1,1 +1,1 @@
-aws s3 sync s3://uvt-streaming-data/everynoise/worldbrowser/ ../../rawdata-confidential/promotions --region eu-central-1 --exclude "*" --include "*.json"
+aws s3 sync s3://uvt-data-music-streaming/everynoise/raw/worldbrowser/ ../../rawdata-confidential/promotions --region eu-central-1 --exclude "*" --include "*.json"
