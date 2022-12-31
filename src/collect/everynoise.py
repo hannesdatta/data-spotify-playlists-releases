@@ -19,11 +19,17 @@ bucket_dir = 'everynoise/raw/new-releases/'
 def uploadToS3(filepath, filename):
 
     logging.info("Trying to upload to S3 file... %s", filename)
-
+    print('bucket: ' + bucket_name)
+    print('filepath: ' + filepath)
+    print('filename: ' + filename)
+    s3.upload_file(filepath, bucket_name, filename)
+    print('upload compl.')
+    
+def somethingelse():    
     # uploads the file via a managed uploader, which will split up large files automatically and upload in parallel
     try:
         s3.upload_file(filepath, bucket_name, filename)
-        logging.info("Upload to S3 OK.")
+        logging.info("Upload to S3 OK. " + filepath + bucket_name + filename)
         return True
     except boto3.exceptions.S3UploadFailedError as e:
         logging.critical("Upload to S3 ERROR.", exc_info=True)
@@ -132,8 +138,8 @@ files_to_handle = []
 s3 = boto3.client("s3")
 
 # launch the spider
-process.crawl(EveryNoiseSpider)
-process.start()  # the script will block here until the crawling is finished
+#process.crawl(EveryNoiseSpider)
+#process.start()  # the script will block here until the crawling is finished
 
 # write output file
 with io.open(directory + "/everynoise_newreleases_" + runDate + ".json", "w", encoding="UTF-8") as json_output:
@@ -145,6 +151,7 @@ with io.open(directory + "/everynoise_newreleases_" + runDate + ".json", "w", en
 
 # upload all json files to S3
 for file in os.scandir(directory):
+    print('consider uploading ' + file.name)
     if file.name.endswith(".json") and file.name in files_to_handle:  # only upload files from the current crawling
         uploadResult = uploadToS3(file.path, bucket_dir+file.name)
         if uploadResult is False:
