@@ -64,7 +64,7 @@ def get_token():
 
 
 @sleep_and_retry
-@limits(calls=30, period=5)
+@limits(calls=1, period=6)
 def get_from_spotify(url):
     global expiry_time, token
     
@@ -168,7 +168,10 @@ def printProgressBar (iteration, total, prefix = '', suffix = '', decimals = 1, 
 f=open('albums20221216.csv','r')
 con=f.readlines()
 albumids = []
+
 for i in con[1:]: albumids.append(i.replace('\n',''))
+
+
 f.close()
 
 # load available file names
@@ -181,9 +184,10 @@ for o in onlyfiles: availids.append(o.replace('.json',''))
 albumupt = list(set(albumids).difference(set(availids)))
 
 
-it=0
-tot=len(albumupt)
+it=len(availids)
+
+tot=len(albumids)
 for id in albumupt:
-    it+=1
     printProgressBar(it,tot)
     get_album(id)
+    it+=1

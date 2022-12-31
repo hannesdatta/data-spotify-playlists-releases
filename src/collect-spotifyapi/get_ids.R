@@ -10,4 +10,4 @@ albums = gsub('spotify:album:','',albums)
 set.seed(1234)
 albums = albums[order(runif(length(albums)))]
 
-fwrite(albums, 'albums20221216.csv')
+fwrite(data.table(id=albums), 'albums20221216.csv')
