@@ -189,5 +189,9 @@ it=len(availids)
 tot=len(albumids)
 for id in albumupt:
     printProgressBar(it,tot)
-    get_album(id)
+    try:
+       get_album(id)
+    except:
+       print('Error. Sleeping 60 seconds.')
+       time.sleep(60)
     it+=1
