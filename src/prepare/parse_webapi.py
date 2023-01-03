@@ -3,8 +3,8 @@ import json
 
 # Open file
 dirn = '../../rawdata-confidential/webapi-newreleases_json/*.json' # input files
-csvfn='../../temp/webapi-new-releases.csv' # output file
-csvtitlefn='../../temp/webapi-new-releases-acoustics.csv' # output file
+csvfn='../../releases/webapi-new-releases.csv' # output file
+csvtitlefn='../../releases/webapi-new-releases-acoustics.csv' # output file
 
 acoustics = ['id','danceability','energy','key','loudness','mode','speechiness',
 'acousticness','instrumentalness','liveness','valence','tempo','duration', 'time_signature']
@@ -12,7 +12,7 @@ acoustics = ['id','danceability','energy','key','loudness','mode','speechiness',
 import glob
 import os
 try:
-	os.mkdir('../../temp')
+	os.mkdir('../../releases')
 except:
 	print('directory exists')
 
