@@ -11,7 +11,8 @@ raw <- raw[nchar(as.character(playlist_id))==22] # keep only data w/ playlist ID
 
 raw[sectionName=='test_latin', sectionName:='latin']
 
-agg = raw[, list(1), by = c('scrapeDate', 'sectionName', 'countryCode', 'playlist_id')]
+# positions very across scrapes
+agg = raw[, list(position=mean(count)), by = c('scrapeDate', 'sectionName', 'countryCode', 'playlist_id')]
 agg[, countryCode:=tolower(stri_trim(countryCode))]
 
 # country codes
@@ -39,13 +40,7 @@ setkey(agg, scrapeDate)
 agg[dates, date:=i.date]
 agg[, scrapeDate:=NULL]
 
-
-# only list whether it was listed, not how much?!
 setcolorder(agg, c('countryCode','continent','sectionName', 'date','playlist_id'))
-
-agg[, V1:=NULL]
-
-
 stopifnot(nrow(agg[is.na(continent)])==0)
 
 dir.create('../../release/')
