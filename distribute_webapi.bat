@@ -1,0 +1,1 @@
+aws s3 sync releases/. s3://uvt-data-music-streaming/everynoise/releases/2023_01_03/ --region eu-central-1  --exclude "*.*" --include "*.csv" 
